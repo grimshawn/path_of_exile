@@ -15,7 +15,7 @@
 # README.md for what that means for how you actually run this container.
 
 # ---- Stage 1: LuaJIT, pinned to the commit PoB's own Dockerfile uses ----
-FROM ubuntu:24.04 AS luajit-build
+FROM debian:bookworm-slim AS luajit-build
 RUN apt-get update && apt-get install -y --no-install-recommends \
       git build-essential ca-certificates \
     && rm -rf /var/lib/apt/lists/*
