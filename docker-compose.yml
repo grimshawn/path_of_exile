@@ -1,0 +1,27 @@
+services:
+  pob-mcp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        # Pin to a specific PathOfBuilding tag/commit instead of the moving
+        # `dev` branch if you want fully reproducible builds. Leave as `dev`
+        # to always build against the latest PoE1 data at build time.
+        POB_REF: dev
+    image: pob-mcp:poe1
+    container_name: pob-mcp
+    # This server speaks MCP over stdio, not HTTP — it has no network port to
+    # publish. It is meant to be started per-session by an MCP client
+    # (`docker compose run --rm pob-mcp`), not left running in the background
+    # with `docker compose up -d`. See README.md.
+    stdin_open: true
+    tty: false
+    environment:
+      POB_AUTO_UPDATE: "true"
+      # POE_TRADE_ENABLED: "true"
+      # POE_SESSION_ID: "changeme"
+    volumes:
+      - pob-builds:/data/builds
+
+volumes:
+  pob-builds:
