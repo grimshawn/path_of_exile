@@ -57,6 +57,8 @@ COPY --from=luautf8-build /opt/luautf8/lua-utf8.so /opt/lua-modules/lua-utf8.so
 ARG POB_REF=dev
 RUN git clone https://github.com/PathOfBuildingCommunity/PathOfBuilding.git /opt/PathOfBuilding \
     && cd /opt/PathOfBuilding && git checkout "${POB_REF}"
+RUN mkdir -p /opt/PathOfBuilding/runtime
+COPY --from=luautf8-build /opt/luautf8/lua-utf8.so /opt/PathOfBuilding/runtime/lua-utf8.so
 
 # pob-mcp itself
 RUN git clone https://github.com/ianderse/pob-mcp.git /opt/pob-mcp
